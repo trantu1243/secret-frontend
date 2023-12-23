@@ -1,10 +1,14 @@
 import React,{useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { SERVER_URL } from "./constants";
+import { SERVER_URL } from "../constants";
+import axios from "axios";
 
 function SignIn(props){
+    
+
     const [textInput, setInput] = useState({username:"", password:""});
     const navigate = useNavigate();
+
     function handleChange(event){
         const {name, value} = event.target;
         setInput(preValue=>{
@@ -12,39 +16,33 @@ function SignIn(props){
         });
     }
 
-    function onLoginSuccess(){
-        console.log("Login Successfully!");
-        props.setCheckLogin(true);
-        navigate("/home");
-    }
-
     async function handleClick(event){
 
         event.preventDefault();
 
         try {
-            const response = await fetch(SERVER_URL + "/login", {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(textInput),
-            });
+            
+            const response = await axios.post(SERVER_URL + "/login", textInput);
       
-            if (response.ok) {
-              console.log(response);
-              onLoginSuccess();
+            if (response.data) {
+                console.log(response.data);
+
+                // Save new token to localStorage
+                const newToken = response.data.token;
+                localStorage.setItem("token", newToken);
+                props.setToken(newToken);
+
             } else {
               console.error('Login failed');
             }
-          } catch (error) {
-            console.error('Error logging in:', error);
-          }
+        } catch (error) {
+          console.error('Error logging in:', error);
+        }
     }
 
     function createAccount(event){
-      event.preventDefault();
-      navigate("/register");
+        event.preventDefault();
+        navigate("/register");
     }
 
     return <div className="signIn">
