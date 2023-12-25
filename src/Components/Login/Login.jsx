@@ -4,6 +4,7 @@ import SecretImg from "../SecretImg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SERVER_URL } from "../constants";
+import "../CSS/style.css"
 
 function Login(props){
     const navigate = useNavigate();
@@ -23,9 +24,9 @@ function Login(props){
         
       },[props.token, navigate]);
   
-      useEffect(() =>{
-          if (props.token) onLoginSuccess();
-      },[props.token, onLoginSuccess]);
+    useEffect(() =>{
+        if (props.token) onLoginSuccess();
+    },[props.token, onLoginSuccess]);
     
     return <div className="container">
         <SecretImg />

@@ -1,9 +1,11 @@
 import React from "react";
 import LogOut from "./LogOut";
 import { useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
-import LeftNavbar from "./LeftNavbar";
-
+import TopNavbar from "../Navbar/TopNavbar";
+import LeftNavbar from "../Navbar/LeftNavbar";
+import RightNavbar from "../Navbar/RightNavbar";
+import HomeContent from "./HomeContent";
+import "../CSS/home.css"
 
 function Home(props){
     const navigate = useNavigate();
@@ -15,9 +17,12 @@ function Home(props){
       
     return (
        <div className="home">
-            <LogOut token={props.token} setToken={props.setToken} />
-            <Navbar />
             <LeftNavbar />
+            <TopNavbar />
+            <RightNavbar />
+            <HomeContent />
+            
+            <LogOut token={props.token} setToken={props.setToken} />
        </div>
     )
 }

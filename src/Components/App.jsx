@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./Login/Login";
 import Home from "./Home/Home";
 import Register from "./Register/Register";
+import Profile from "./Profile/Profile";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token") || "")
@@ -22,6 +23,10 @@ function App() {
     {
       path:"home", 
       element: <Home token={token} setToken={setToken} />,
+    },
+    {
+      path:"profile/:userId",
+      element: <Profile />
     },
   ]);
   return (

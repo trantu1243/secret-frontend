@@ -4,7 +4,13 @@ import { SERVER_URL } from "../constants";
 import axios from "axios";
 
 function SignUp(props){
-    const [textInput, setInput] = useState({username:"", password:"", confirmPassword:""});
+    const [textInput, setInput] = useState({
+        firstName:"",
+        lastName:"",
+        username:"", 
+        password:"", 
+        confirmPassword:""
+    });
     const [checkPass, setCheckPass] = useState(true);
     const [checkUser, setCheckUser] = useState(false);
     const navigate = useNavigate();
@@ -52,8 +58,10 @@ function SignUp(props){
     }
 
     return <div className="signIn">
-        <form>
+        <form className="userForm">
             <h2>Member Register</h2>
+            <input style={{width:"220px",marginRight:"20px"}} placeholder="First name" name="firstName" type="text" value={textInput.firstName} onChange={handleChange}></input>
+            <input style={{width:"220px"}} placeholder="Last name" name="lastName" type="text" value={textInput.lastName} onChange={handleChange} ></input>
             <input placeholder="Username" name="username" type="text" value={textInput.username} onChange={handleChange}></input>
             {checkUser && <p style={{color:"red",margin:"0",padding:"0"}}>Username already exists. Please choose another username.</p>}
             <input placeholder="Password" name="password" type="password" value={textInput.password} onChange={handleChange}></input>

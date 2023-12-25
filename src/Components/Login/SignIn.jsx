@@ -46,7 +46,7 @@ function SignIn(props){
     }
 
     return <div className="signIn">
-        <form>
+        <form className="userForm">
             <h2>Member Login</h2>
             <input placeholder="Username" name="username" type="text" value={textInput.username} onChange={handleChange}></input>
             <input placeholder="Password" name="password" type="password" value={textInput.password} onChange={handleChange}></input>

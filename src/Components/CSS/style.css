@@ -2,6 +2,7 @@ body{
     background-color: aliceblue;
     text-align: center;
     font-family: "Montserrat", sans-serif;
+    overflow: hidden;
 }
 
 
@@ -10,12 +11,9 @@ body{
     height: 2.5rem;
     text-align: center;
 }
-.signIn{
-   
-    
-}
 
-form {
+
+.userForm {
    
     width: 520px;
     margin: 30px auto 20px auto;
@@ -24,6 +22,7 @@ form {
     border-radius: 20px;
     box-shadow: 0 1px 5px rgb(138, 137, 137);
   }
+
 
 .signIn input{
     width: 480px;
@@ -37,6 +36,8 @@ form {
     border-radius: 20px;
     background-color: rgb(239, 239, 239);
 }
+
+
 
 .buttonSignIn{
     border: 0;
