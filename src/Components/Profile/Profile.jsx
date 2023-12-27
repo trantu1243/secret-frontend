@@ -6,13 +6,13 @@ import ContentProfile from "./ContentProfile";
 import "../CSS/home.css"
 
 
-function Profile(){
+function Profile(props){
     return (
         <div className="home">
             <LeftNavbar />
             <TopNavbar />
             <RightNavbar />
-            <ContentProfile />
+            <ContentProfile token={props.token} setToken={props.setToken}/>
             
         </div>
      )

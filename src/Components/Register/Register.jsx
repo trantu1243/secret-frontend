@@ -11,7 +11,7 @@ function Register(props){
 
     const onLoginSuccess = useCallback(async() => {
         try{
-            const response = await axios.get(SERVER_URL + "/login", {headers:{Authorization:props.token}});
+            const response = await axios.get(SERVER_URL + "/login", {headers:{Authorization:`Bearer ${props.token}`}});
             if (response.data){
               console.log(response.data.message);
               navigate("/home");
@@ -19,10 +19,12 @@ function Register(props){
         }
         catch (e) {
             console.log(e);
+            localStorage.setItem("token","");
+            props.setToken("");
         }
         
         
-      },[props.token, navigate]);
+      },[props, navigate]);
   
     useEffect(() =>{
         if (props.token) onLoginSuccess();

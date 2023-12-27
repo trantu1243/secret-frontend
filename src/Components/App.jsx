@@ -6,7 +6,7 @@ import Register from "./Register/Register";
 import Profile from "./Profile/Profile";
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem("token") || "")
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
   const router = createBrowserRouter([
     {
       path: "/",
@@ -26,7 +26,7 @@ function App() {
     },
     {
       path:"profile/:userId",
-      element: <Profile />
+      element: <Profile token={token} setToken={setToken} />
     },
   ]);
   return (
