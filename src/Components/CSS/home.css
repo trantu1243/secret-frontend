@@ -1,6 +1,8 @@
+
+
 body{
     margin: 0 !important;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .home{
@@ -115,8 +117,13 @@ body{
 
 
 
+
 /* font-family: 'Open Sans', sans-serif; */
 
+
+
+
+/* home page */
 
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@600&family=Open+Sans&family=Patrick+Hand&family=Roboto&family=Space+Grotesk:wght@600&display=swap');
 
@@ -130,7 +137,6 @@ p{
     background-color: black;
     color: white;
     font-family: 'Open Sans', sans-serif;
-
 }
 
 .itemContent{
@@ -142,9 +148,25 @@ p{
     border-left:1px solid gray;
     border-right:1px solid gray;
 }
+
+.item-content{
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    border-bottom:1px solid gray;
+    border-left:1px solid gray;
+    border-right:1px solid gray;
+}
+
+.titleContent:hover{
+    cursor: pointer;
+}
+
 .avatar{
     width: 50px;
     height: 50px;
+    object-fit: cover;
     border-radius: 50%;
     border: 2px solid gray;
     margin-right: 8px;
@@ -176,6 +198,26 @@ p{
     color: gray;
 }
 
+
+.three-dots{
+    float: right;
+    margin: 10px;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+}
+
+.three-dots > svg{
+    border-radius: 50%;
+    padding: 4px;
+}
+
+.three-dots > svg:hover{
+    background-color: #001c1b;
+    cursor: pointer;
+    fill: #00fffb;
+}
+
 .post{
     font-weight: 500;
     font-size: 16px;
@@ -184,18 +226,25 @@ p{
     margin: 10px 0;
 }
 
+.imagePost{
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 20px;
+}
 
 .action{
     display: inline-flex;
     margin-left: 60px;
     justify-content:space-between;
-    width: 50%;
+    width: 80%;
     color: rgb(207, 207, 207);
 }
 
 .itemAction{
     display: inline-flex;
     align-items: center;
+    padding: 4px;
+    border-radius: 19px;
 }
 
 .itemAction:hover{
@@ -204,6 +253,7 @@ p{
 
 .heart:hover{
     color: red;
+    background-color: rgb(33, 0, 0);
 }
 
 .heart:hover svg{
@@ -212,14 +262,18 @@ p{
 
 .comment:hover{
     color: rgb(0, 110, 255);
+    background-color: rgb(0, 16, 37);
 }
 
 .comment:hover svg{
     fill: rgb(0, 110, 255);
 }
 
+
+
 .repost:hover{
     color: rgb(0, 255, 0);
+    background-color: rgb(0, 29, 0);
 }
 
 .repost:hover svg{
@@ -232,9 +286,15 @@ p{
     
 }
 
-.inputPost form{
+.inputPost-form{
     width: 100%;
     padding-right: 30px;
+}
+
+.comment-form{
+    width: 100%;
+    padding-right: 55px;
+    position: relative;
 }
 
 .inputPost textarea{
@@ -256,21 +316,44 @@ p{
     caret-color: white;
 }
 
-.inputPost button{
+.check-button{
     border: none;
     padding: 10px 20px;
     font-size: 15px;
     font-weight: bolder;
     border-radius: 20px;
-    background-color: rgb(31, 143, 255);
     color: white;
     float: right;
     margin: 10px;
     
 }
 
-.inputPost button:hover{
-    cursor: pointer;
+.check-button-false{
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: #3f98f1;
+}
+
+.check-button-true{
+    background-color: #1f8fff;
+}
+
+.check-comment-button{
+    width: 49px;
+    height: 49px;
+    border: none;
+    background-color: black;
+    padding: 8px;
+    font-size: 15px;
+    border-radius: 50%;
+    float: right;
+    position: absolute;
+    top: 1%;
+    right: 1%;
+}
+
+.check-comment-button:hover{
+    background-color: #051626;
 }
 
 .yourPostLine{
@@ -278,6 +361,47 @@ p{
     background-color: rgb(59, 59, 59);
     height: 1px;
 }
+
+.commentLine{
+    width: 100%;
+    background-color: rgb(59, 59, 59);
+    height: 1px;
+    margin-bottom: 15px;
+}
+
+#inputPostImage{
+    display: none;
+}
+
+.customPostImageInput{
+    display: inline-block;
+    margin: 10px;
+}
+.customPostImageInput:hover{
+    cursor: pointer;
+}
+
+.loadImage{
+    position: relative;
+    width: 100%;
+}
+
+.loadImage > img{
+    width: 100%;
+}
+
+.cancelIcon:hover{
+    cursor: pointer;
+}
+
+.loadImage  svg{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+
+/* profile page */
 
 .userProfile{
     width: 100%;

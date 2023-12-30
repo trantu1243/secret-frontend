@@ -1,11 +1,14 @@
-import React,{useState, useEffect, useCallback} from "react";
+import React,{useState, useEffect, useCallback, useContext} from "react";
 import { useParams } from "react-router-dom";
+
 import axios from "axios";
 import { SERVER_URL } from "../constants";
+import { UserContext } from "../App";
 
 function ContentProfile(props){
+    const user = useContext(UserContext);
     const [profileUser, setProfileUser] = useState({
-        id:"",
+        _id:"",
         firstName: "",
         lastName: "",
         avatarImageUrl: "",
@@ -18,15 +21,7 @@ function ContentProfile(props){
             const response = await axios.get(SERVER_URL + "/profile/" + userId);
             if (response.data){
                 console.log(response.data);
-                setProfileUser({
-                    id:response.data._id,
-                    firstName: response.data.firstName,
-                    lastName: response.data.lastName,
-                    avatarImageUrl: response.data.avatarImageUrl,
-                    backgroundImageUrl:response.data.backgroundImageUrl,
-                });
-               
-              
+                setProfileUser(response.data);
             }
         }
         catch (e){
@@ -40,39 +35,15 @@ function ContentProfile(props){
     
     // send tonken to server
 
-    const [loginUserId, setUserId] = useState("");
     const [checkLogin, setCheckLogin] = useState(false);
 
-    const onLoginSuccess = useCallback(async() => {
-        try{
-            const response = await axios.get(SERVER_URL + "/login", {headers:{Authorization:`Bearer ${props.token}`}});
-            if (response.data){
-                console.log(response.data.id);
-                setUserId(response.data.id);
-            }
-        }
-        catch (e) {
-            console.log(e);
-            localStorage.setItem("token","");
-            props.setToken("");
-        }
-        
-        
-      },[props, setUserId]);
-    
+
+    //
     useEffect(() =>{
-        if (props.token) onLoginSuccess();
-    },[props.token, onLoginSuccess]);
-    
-    const handleCheckLogin = useCallback(()=>{
-        if (loginUserId === profileUser.id) {
+        if (user._id === profileUser._id) {
             setCheckLogin(true);
         }
-    },[loginUserId, profileUser.id])
-
-    useEffect(() =>{
-        if (loginUserId) handleCheckLogin();
-    }, [loginUserId, handleCheckLogin]);
+    }, [user, profileUser]);
 
     const [checkAvatarClick, setCheckAvatarClick] = useState(false);
     const [checkBackgroundClick, setCheckbackgroundClick] = useState(false);
@@ -87,7 +58,7 @@ function ContentProfile(props){
 
     
    
-
+    // Upload avatar and background image
     async function handleBackgroundImage(e){
         const formData = new FormData();
         formData.append('background', e.target.files[0]);

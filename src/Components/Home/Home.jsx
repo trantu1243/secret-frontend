@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import LogOut from "./LogOut";
 import { useNavigate } from "react-router-dom";
 import TopNavbar from "../Navbar/TopNavbar";
@@ -9,21 +9,23 @@ import "../CSS/home.css"
 
 function Home(props){
     const navigate = useNavigate();
-    React.useEffect(() => {
-        if(!props.token) {
-          navigate("/");
+   
+
+    useEffect (()=>{
+        if (!props.token) {
+            navigate("/");
         }
-    }, [props.token, navigate]);
-      
+    }, [navigate, props.token]);
+    
     return (
-       <div className="home">
-            <LeftNavbar />
-            <TopNavbar />
-            <RightNavbar />
-            <HomeContent />
+      <div className="home">
+          <LeftNavbar />
+          <TopNavbar />
+          <RightNavbar />
+          <HomeContent token={props.token} setToken={props.setToken} />
             
-            <LogOut token={props.token} setToken={props.setToken} />
-       </div>
+          <LogOut token={props.token} setToken={props.setToken} />
+      </div>
     )
 }
 
