@@ -55,10 +55,11 @@ function InsidePost(props){
     const currentLocation = location.pathname;
     
     function navigatePost(){
-        if (currentLocation === "/home") navigate("/post/" + post._id);
+        if (currentLocation.search("/post") === -1) navigate("/post/" + post._id);
     }
 
     return(
+        
         <>
             <div className="titleContent" onClick={navigatePost}>
                 <div className="userContent">
@@ -75,7 +76,7 @@ function InsidePost(props){
                     
                 </div>
                 <div className="three-dots">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="gray" class="bi bi-three-dots" viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="gray" viewBox="0 0 16 16">
                         <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
                     </svg>  
                 </div>

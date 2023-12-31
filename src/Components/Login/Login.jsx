@@ -11,6 +11,7 @@ function Login(props){
     const user = useContext(UserContext);
 
     useEffect (()=>{
+        console.log(user);
         if (user) {
             navigate("/home");
         }

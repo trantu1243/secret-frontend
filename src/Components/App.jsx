@@ -13,16 +13,9 @@ const UserContext = createContext();
 function App() {
 
 
-
     const [token, setToken] = useState(localStorage.getItem("token") || "");
 
-    const [user, setUser] = useState({
-        id:"",
-        firstName: "",
-        lastName: "",
-        avatarImageUrl: "",
-        backgroundImageUrl:"",
-    });
+    const [user, setUser] = useState(null);
 
     const onLoginSuccess = useCallback(async() => {
         try{
@@ -33,7 +26,6 @@ function App() {
                 
             } else {
                 localStorage.removeItem("token");
-             
                 setToken("");
                 setUser(null);
             }
