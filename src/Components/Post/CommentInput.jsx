@@ -1,32 +1,41 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useContext, useState} from "react";
+import { UserContext } from "../App";
 
 function CommentInput(){
 
-     // add effect for commet input
-     const textareaRef = useRef(null);
-     useEffect(() => {
-        const textarea = textareaRef.current;
-    
-        const handleTextareaInput = () => {
-            textarea.style.height = "auto";
-            textarea.style.height = (textarea.scrollHeight) + "px";
-        };
-    
-        if (textarea) {
-            textarea.addEventListener("input", handleTextareaInput);
-    
-            return () => {
-                textarea.removeEventListener("input", handleTextareaInput);
-            };
+    const user = useContext(UserContext);
+    const [avatarImageUrl, setAvatarImageUrl] = useState("");
+    useEffect(()=>{
+        if (user) {
+            setAvatarImageUrl(user.avatarImageUrl);
         }
-     }, [textareaRef]);
+    },[user]);
+    
+    // add effect for commet input
+    const textareaRef = useRef(null);
+    useEffect(() => {
+    const textarea = textareaRef.current;
+
+    const handleTextareaInput = () => {
+        textarea.style.height = "auto";
+        textarea.style.height = (textarea.scrollHeight) + "px";
+    };
+
+    if (textarea) {
+        textarea.addEventListener("input", handleTextareaInput);
+
+        return () => {
+            textarea.removeEventListener("input", handleTextareaInput);
+        };
+    }
+    }, [textareaRef]);
     return(
         <div className="commentInput">
             <div className="commentLine"></div>
             <div className="inputPost ">
                     <img 
                         className="avatar" 
-                        src={"https://trantu1243.blob.core.windows.net/loadimage-11ee-814b-45e4577e52de/60f1fe16956559.562b39813b082.jpg"} 
+                        src={avatarImageUrl || "https://trantu1243.blob.core.windows.net/loadimage-11ee-814b-45e4577e52de/60f1fe16956559.562b39813b082.jpg"} 
                         alt="" 
                         
                     />

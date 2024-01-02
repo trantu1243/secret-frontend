@@ -21,7 +21,7 @@ function App() {
         try{
             const response = await axios.get(SERVER_URL + "/login", {headers:{Authorization:`Bearer ${token}`}});
             if (response.data){
-                console.log(response.data);
+             
                 setUser(response.data);
                 
             } else {

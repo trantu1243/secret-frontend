@@ -3,14 +3,14 @@ import { useParams } from "react-router-dom";
 import CommentInput from "./CommentInput";
 import InsidePost from "./InsidePost";
 
-function ContentPost(){
+function ContentPost(props){
     const {postId} = useParams();
     return(
         <div className="content">
             <div className="item-content">
-                <InsidePost postId={postId} />
+                <InsidePost postId={postId} token={props.token} setToken={props.setToken} />
                 
-                <CommentInput />
+                <CommentInput postId={postId} />
             </div>  
         </div>
     )

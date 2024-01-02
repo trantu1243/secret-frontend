@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-import LogOut from "./LogOut";
 import { useNavigate } from "react-router-dom";
 import TopNavbar from "../Navbar/TopNavbar";
 import LeftNavbar from "../Navbar/LeftNavbar";
@@ -21,10 +20,9 @@ function Home(props){
       <div className="home">
           <LeftNavbar />
           <TopNavbar />
-          <RightNavbar />
+          <RightNavbar token={props.token} setToken={props.setToken} />
           <HomeContent token={props.token} setToken={props.setToken} />
             
-          <LogOut token={props.token} setToken={props.setToken} />
       </div>
     )
 }

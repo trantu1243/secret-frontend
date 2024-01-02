@@ -5,14 +5,14 @@ import RightNavbar from "../Navbar/RightNavbar";
 import ContentPost from "./ContentPost";
 import "../CSS/home.css"
 
-function Post(){
+function Post(props){
     return (
         <div className="home">
             <LeftNavbar />
             <TopNavbar />
-            <RightNavbar />
+            <RightNavbar token={props.token} setToken={props.setToken}/>
             
-            <ContentPost />
+            <ContentPost token={props.token} setToken={props.setToken}/>
         </div>
     )
 }
