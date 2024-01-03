@@ -1,6 +1,6 @@
-import React,{useState, useEffect, useCallback, useContext} from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import React,{useState, useEffect, useContext} from "react";
+import {  useNavigate } from "react-router-dom";
+
 
 import { SERVER_URL } from "../constants";
 import { UserContext } from "../App";
@@ -10,39 +10,8 @@ import PostInput from "../Home/PostInput";
 function ProfileInterface(props){
     const navigate = useNavigate();
     const user = useContext(UserContext);
-    const [profileUser, setProfileUser] = useState({
-        _id:"",
-        firstName: "",
-        lastName: "",
-        avatarImageUrl: "",
-        backgroundImageUrl: "",
-        image:[],
-        yourPostId:[],
-        yourSecretId:[],
-        repostId:[],
-        followerId:[],
-        followingId:[],
-        like:[],
-        comment:[],
-    });
-    const {userId} = useParams();
 
-    const getUser = useCallback(async()=>{
-        try{
-            const response = await axios.get(SERVER_URL + "/profile/" + userId);
-            if (response.data){
-                console.log(response.data);
-                setProfileUser(response.data);
-            }
-        }
-        catch (e){
-            console.log(e);
-        }
-    }, [userId]);
-
-    useEffect(() => {
-        getUser();
-    }, [getUser]);
+    const {profileUser, getUser} = props;
     
     // send tonken to server
 
@@ -197,7 +166,7 @@ function ProfileInterface(props){
         <>
             <div className="userProfile">
                 <div className="userProfileImage">
-                    <img className="backgroundImage" src={profileUser.backgroundImageUrl} alt="" onClick={handleBackgroundClick} />
+                    <img className="backgroundImage" src={profileUser.backgroundImageUrl || "https://th.bing.com/th/id/OIP.Mbp8x3nrhHsiMcJ7p7K-QAHaEK?rs=1&pid=ImgDetMain"} alt="" onClick={handleBackgroundClick} />
                     {(checkBackgroundClick && checkLogin) && <div className="backgroundPopup">
                         <div><p>Show background image</p></div>
                         <label htmlFor="backgroundImageInput" className="customBackgroundImageInput">
@@ -208,7 +177,7 @@ function ProfileInterface(props){
                         
                         
                     </div>}
-                    <img className="avatarImage" src={profileUser.avatarImageUrl} alt="" onClick={handleAvatarClick} />
+                    <img className="avatarImage" src={profileUser.avatarImageUrl || "https://www.htmlcsscolor.com/preview/128x128/4E4E4E.png"} alt="" onClick={handleAvatarClick} />
                     {(checkAvatarClick && checkLogin) && <div className="avatarPopup">
                         <div><p>Show avatar image</p></div>
                             

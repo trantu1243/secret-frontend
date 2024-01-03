@@ -7,12 +7,47 @@ import ProfileInterface from "./ProfileInterface";
 import { SERVER_URL } from "../constants";
 
 function ContentProfile(props){
+    
+
+    const [profileUser, setProfileUser] = useState({
+        _id:"",
+        firstName: "",
+        lastName: "",
+        avatarImageUrl: "",
+        backgroundImageUrl: "",
+        image:[],
+        yourPostId:[],
+        yourSecretId:[],
+        repostId:[],
+        followerId:[],
+        followingId:[],
+        like:[],
+        comment:[],
+    });
+    const {userId} = useParams();
+
+    const getUser = useCallback(async()=>{
+        try{
+            const response = await axios.get(SERVER_URL + "/profile/" + userId);
+            if (response.data){
+                console.log(response.data);
+                setProfileUser(response.data);
+            }
+        }
+        catch (e){
+            console.log(e);
+        }
+    }, [userId]);
+
+    useEffect(() => {
+        getUser();
+    }, [getUser]);
+  
+
     const [posts, setPosts] = useState([]);
     const [skip, setSkip] = useState(0);
     const [checkLoad, setCheckLoad] = useState(true);
-  
-    
-    const {userId} = useParams();
+
 
     const getPostData = useCallback(async ()=>{
         try{
@@ -63,13 +98,13 @@ function ContentProfile(props){
     return (
 
         <div className="content">
-            <ProfileInterface token={props.token} setToken={props.setToken} />
+            <ProfileInterface token={props.token} setToken={props.setToken} profileUser={profileUser} getUser={getUser} />
 
             {posts.map((yourPost)=>{
             
                 return(
                     <div key={String(yourPost)} className="item-content">
-                        <InsidePost postId={yourPost} token={props.token} setToken={props.setToken} />
+                        <InsidePost postId={yourPost} token={props.token} setToken={props.setToken} profileId={profileUser._id} profileName={profileUser.firstName + " " + profileUser.lastName} />
                     </div>
                 )   
             })}

@@ -160,6 +160,25 @@ p{
     border-right:1px solid gray;
 }
 
+.userRepost{
+    display: inline-flex;
+    align-items: center;
+    color: rgb(120, 120, 120);
+    font-size: 15px;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.userRepost:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.userRepost > svg{
+    padding-left: 34px;
+    margin-right: 8px;
+}
+
 .titleContent:hover{
     cursor: pointer;
 }
@@ -197,6 +216,7 @@ p{
 .postTime{
     font-size: 13px;
     color: gray;
+    font-weight: 400;
 }
 
 
@@ -284,6 +304,7 @@ p{
 .inputPost{
     display: inline-flex;
     width: 100%;
+    margin-bottom: 15px;
     
 }
 
@@ -353,9 +374,10 @@ p{
     right: 1%;
 }
 
-.check-comment-button:hover{
-    background-color: #051626;
+.check-comment-false:hover{
+    cursor: auto;
 }
+
 
 .yourPostLine{
     width: 100%;
@@ -610,3 +632,50 @@ p{
     background-color: rgb(212, 212, 212);
 }
 
+
+.comment-component{
+    padding-right: 15%;
+    margin-bottom: 5px;
+}
+
+.commentContent{
+    display: inline-flex;
+}
+
+.comment-username{
+    margin-bottom: 2px;
+    display: inline-block;
+    font-size: 15px;
+}
+.commentTime{
+    display: inline-block;
+    font-size: 13px;
+    color: gray;
+    font-weight: 400;
+}
+.commentText{
+    font-size: 15px;
+}
+
+.action-comment{
+    
+    
+    width: 100%;
+    color: rgb(207, 207, 207);
+    /* display: inline-flex;
+    justify-content: right; */
+
+}
+
+.itemAction-comment{
+    display: inline-flex;
+    align-items: center;
+    padding: 4px;
+    border-radius: 19px;
+    margin-left: 10%;
+    font-size: 15px;
+}
+
+.itemAction-comment:hover{
+    cursor: pointer;
+}

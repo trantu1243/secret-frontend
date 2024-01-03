@@ -25,6 +25,7 @@ function InsidePost(props){
         repost:[],
     });
     const [like, setLike] = useState(false);
+    const [repost, setRepost] = useState(false);
 
     const getPost = useCallback(async ()=>{
         try{
@@ -42,28 +43,16 @@ function InsidePost(props){
 
     useEffect(()=>{
         getPost();
-    },[getPost, like]);
+    },[getPost, like, repost]);
 
     const [checkImage, setCheckImage] = useState(false);
     useEffect(()=>{
         if(post.image === "") setCheckImage(false);
         else setCheckImage(true);
-    },[post.image])
+    },[post.image]);
 
 
-    // handle navigate
-    function navigateProfileUser(e){
-        e.stopPropagation();
-        navigate("/profile/" + post.userId);
-    }
-
-    const location = useLocation();
-    const currentLocation = location.pathname;
-    
-    function navigatePost(){
-        if (currentLocation.search("/post") === -1) navigate("/post/" + post._id);
-    }
-
+   
     // handle post date
     const [timeFromNow, setTimeFromNow] = useState("");
     useEffect(()=>{
@@ -90,6 +79,27 @@ function InsidePost(props){
         };
     },[post.postDate]);
 
+     // handle navigate
+     function navigateProfileUser(e){
+        e.stopPropagation();
+        navigate("/profile/" + post.userId);
+      
+        window.location.reload();
+        window.scrollTo({
+            top: 0,
+            behavior: "instant"
+          });
+ 
+    }
+
+    const location = useLocation();
+    const currentLocation = location.pathname;
+    
+    function navigatePost(){
+        if (currentLocation.search("/post") === -1) navigate("/post/" + post._id);
+    }
+
+
     // handle like
 
     
@@ -107,7 +117,7 @@ function InsidePost(props){
             const formData = new URLSearchParams();
             formData.append("id", post._id);
             const response = await fetch(SERVER_URL + "/post/like",{
-                method:"POST",
+                method:"PATCH",
                 body: formData,
                 headers:{
                     "Authorization": `Bearer ${props.token}`,
@@ -134,7 +144,7 @@ function InsidePost(props){
             const formData = new URLSearchParams();
             formData.append("id", post._id);
             const response = await fetch(SERVER_URL + "/post/unlike",{
-                method:"POST",
+                method:"PATCH",
                 body: formData,
                 headers:{
                     "Authorization": `Bearer ${props.token}`,
@@ -156,9 +166,92 @@ function InsidePost(props){
 
     }
 
+    // handle comment
+    
+    function handleComment(){
+        if (currentLocation.search("/post") === -1){
+            navigate("/post/" + post._id);
+        } else{
+            props.forwardedRef.current.focus();
+
+        }
+
+    }
+
+    // handle repost
+
+    useEffect(()=>{
+        if (user && post.repost.includes(user._id)) {
+            setRepost(true);
+        } else{
+            setRepost(false);
+        }
+    },[post.repost, user]);
+
+    async function handleRepost(){
+        try {
+            const formData = new URLSearchParams();
+            formData.append("id", post._id);
+            if (!repost) {
+                const response = await fetch(SERVER_URL + "/post/repost",{
+                    method:"PATCH",
+                    body: formData,
+                    headers:{
+                        "Authorization": `Bearer ${props.token}`,
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                });
+                if (response){
+                    console.log("repost successful");
+                }
+                setRepost(true);
+            } else {
+                const response = await fetch(SERVER_URL + "/post/unrepost",{
+                    method:"PATCH",
+                    body: formData,
+                    headers:{
+                        "Authorization": `Bearer ${props.token}`,
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                });
+                if (response){
+                    console.log("unrepost successful");
+                }
+                setRepost(false);
+            }  
+            
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    const [checkRepost, setCheckRepost] = useState(false);
+    const [repostName, setRepostName] = useState("");
+
+    useEffect(()=>{
+        if (props.profileId && post.repost.includes(props.profileId)) {
+            setCheckRepost(true);
+            if (user._id && user._id === props.profileId) {
+                setRepostName("You");
+            }
+            else setRepostName(props.profileName);
+        } else setCheckRepost(false);
+    },[props, post.repost, user]);
+
+
     return(
         
         <>
+            {checkRepost && <div className="userRepost">
+                <svg viewBox="0 0 24 24" fill="rgb(120, 120, 120)" width="20px" height="20px" aria-hidden="true" >
+                    <g>
+                        <path d="M4.75 3.79l4.603 4.3-1.706 1.82L6 8.38v7.37c0 .97.784 1.75 1.75 1.75H13V20H7.75c-2.347 0-4.25-1.9-4.25-4.25V8.38L1.853 9.91.147 8.09l4.603-4.3zm11.5 2.71H11V4h5.25c2.347 0 4.25 1.9 4.25 4.25v7.37l1.647-1.53 1.706 1.82-4.603 4.3-4.603-4.3 1.706-1.82L18 15.62V8.25c0-.97-.784-1.75-1.75-1.75z">
+                        </path>
+                    </g>
+                </svg>
+                <p>{repostName + " reposted"}</p>
+            </div>}
             <div className="titleContent" onClick={navigatePost}>
                 <div className="userContent">
                     <img 
@@ -203,7 +296,7 @@ function InsidePost(props){
                     </svg>
                     <p>{post.like.length}</p>
                 </div>}
-                <div className="itemAction comment">
+                <div className="itemAction comment" onClick={handleComment}>
                     <svg fill="rgb(207, 207, 207)" height="30px" width="30px" version="1.1">
                         <g>
                             <path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z">
@@ -212,14 +305,16 @@ function InsidePost(props){
                     </svg>
                     <p>{post.comment.length}</p>
                 </div>
-                <div className="itemAction repost">
-                    <svg fill="rgb(207, 207, 207)" height="30px" width="30px" version="1.1">
+                <div className="itemAction repost" onClick={handleRepost}>
+                    <svg fill={repost ? "rgb(0, 255, 0)" : "rgb(207, 207, 207)"} height={repost ? "32px": "30px"} width={repost ? "32px": "30px"} version="1.1">
                         <g>
                             <path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 6H11V4h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.896-2-2-2z">
                             </path>
                         </g>
                     </svg>
-                    <p>{post.repost.length}</p>
+                    {repost ? <p style={{color:"rgb(0, 255, 0)"}}>{post.repost.length}</p>
+                    :<p>{post.repost.length}</p>}
+                    
                 </div>
             </div>
         </>
