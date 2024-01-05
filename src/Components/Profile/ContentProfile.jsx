@@ -64,8 +64,9 @@ function ContentProfile(props){
 
                     if (response.data.posts.length === 0){
                         setCheckLoad(false);
+                        console.log(checkLoad);
                     }
-
+                    
        
                 }
             }
@@ -83,7 +84,6 @@ function ContentProfile(props){
     useEffect(() => {
         const handleScroll = () => {
             if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight) {
-  
                 if(checkLoad) setSkip(preVal => (preVal + 5));
         
             }

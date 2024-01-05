@@ -79,8 +79,8 @@ function InsidePost(props){
         };
     },[post.postDate]);
 
-     // handle navigate
-     function navigateProfileUser(e){
+    // handle navigate
+    function navigateProfileUser(e){
         e.stopPropagation();
         navigate("/profile/" + post.userId);
       
@@ -239,6 +239,65 @@ function InsidePost(props){
         } else setCheckRepost(false);
     },[props, post.repost, user]);
 
+    // pop-up
+    const [checkPopup, setCheckPopup] = useState(false);
+    const [checkUser, setCheckUser] = useState(false);
+
+    function showPopup(e){
+        e.stopPropagation();
+        setCheckPopup(true);
+    }
+
+    function closePopup(){
+        setCheckPopup(false);
+    }
+
+    useEffect(()=>{
+        document.addEventListener('click', closePopup);
+
+        return () => {
+        document.removeEventListener('click', closePopup);
+        };
+    },[]);
+
+    function reportPost(e) { 
+        e.stopPropagation();
+    }
+
+    function navigateEditPage(e){
+        e.stopPropagation();
+        navigate("/edit/" + post._id)
+    }
+
+    async function deletePost(event){
+        event.stopPropagation();
+        try{
+            const formData = new URLSearchParams();
+            formData.append("id", post._id);
+            const response = fetch(SERVER_URL + "/delete/post", {
+                method:"PUT",
+                headers:{
+                    "Authorization": `Bearer ${props.token}`,
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body:formData,
+
+            });
+            if (response){
+                navigate("/profile/" + user._id);
+                window.location.reload();
+
+            }
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
+
+    useEffect(()=>{
+        if (user && user._id === post.userId) setCheckUser(true);
+        else setCheckUser(false);
+    },[user, post.userId]);
 
     return(
         
@@ -266,11 +325,23 @@ function InsidePost(props){
                     </div>
                     
                 </div>
-                <div className="three-dots">
+                <div className="three-dots" onClick={showPopup}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" fill="gray" viewBox="0 0 16 16">
                         <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
                     </svg>  
                 </div>
+
+                {checkPopup && (checkUser ? 
+                <div className="pop-up-post">
+                    <div className="first-pop-up"><p>Show likes</p></div>
+                    <div><p>Show reposts</p></div>
+                    <div onClick={navigateEditPage}><p>Edit post</p></div>
+                    <div className="last-pop-up" onClick={deletePost} ><p>Delete post</p></div>
+                </div>
+                :<div className="pop-up-post">
+                    <div className="first-pop-up" onClick={navigateProfileUser}><p>View profile</p></div>
+                    <div className="last-pop-up" onClick={reportPost}><p>Report post</p></div>
+                </div>)}
                 
             </div>
             <div className="post">

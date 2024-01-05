@@ -36,11 +36,9 @@ function ContentPost(props){
         try{
             const response = await axios.get(SERVER_URL + "/post/comments/" + postId);
             if (response.data){
-         
                 setComments(response.data.commentId);
-    
+                console.log(response.data.commentId);
             }
-
         }
         catch (e){
             console.log(e);
@@ -59,7 +57,7 @@ function ContentPost(props){
                 <InsidePost postId={postId} token={props.token} setToken={props.setToken} forwardedRef={textareaRef} />
                 
                 <CommentInput postId={postId} token={props.token} setToken={props.setToken} getComments={getComments} forwardedRef={textareaRef} />
-                <Comments comments={comments} token={props.token} setToken={props.setToken} />
+                <Comments comments={comments} token={props.token} setToken={props.setToken} getComments={getComments} />
             </div>  
         </div>
     )

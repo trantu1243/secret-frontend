@@ -29,6 +29,7 @@ body{
     width: 100%;
     z-index: 5;
     border-bottom: 1px solid gray;
+    opacity: 0.9;
 }
 
 .leftNavbar{
@@ -177,6 +178,10 @@ p{
 .userRepost > svg{
     padding-left: 34px;
     margin-right: 8px;
+}
+
+.titleContent{
+    position: relative;
 }
 
 .titleContent:hover{
@@ -636,6 +641,7 @@ p{
 .comment-component{
     padding-right: 15%;
     margin-bottom: 5px;
+    position: relative;
 }
 
 .commentContent{
@@ -678,4 +684,95 @@ p{
 
 .itemAction-comment:hover{
     cursor: pointer;
+}
+
+.pop-up-post{
+    position: absolute;
+    top:0;
+    right: 0;
+    background-color: black;
+    box-shadow: 0 0 4px 1px rgb(184, 184, 184);
+    border-radius: 10px;
+    text-align: left;
+    margin-right: 10px;
+    font-weight: 900;
+    font-family:'Exo 2', sans-serif;
+    z-index: 20;
+}
+
+.pop-up-post > *{
+    
+    padding: 10px 20px;
+    
+}
+.first-pop-up{
+    border-radius: 10px 10px 0 0;
+}
+
+.last-pop-up{
+    border-radius: 0 0 10px 10px;
+}
+
+.pop-up-post > *:hover{
+    cursor: pointer;
+    background-color: rgb(33, 33, 33);
+}
+
+.more-comment{
+    font-size: 15px;
+    font-weight: 900;
+}
+
+.more-comment:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.three-dots-comment{
+    position: absolute;
+    top: 5%;
+    right: 2%;
+    margin: 10px;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    z-index: 5;
+}
+
+.three-dots-comment > svg{
+    border-radius: 50%;
+    padding: 4px;
+}
+
+.three-dots-comment > svg:hover{
+    background-color: #001c1b;
+    cursor: pointer;
+    fill: #00fffb;
+}
+
+.check-edit-comment-button{
+    color: whitesmoke;
+    padding: 10px 15px;
+    border: none;
+    font-size: 15px;
+    border-radius: 20px;
+
+    position: absolute;
+    top: 5%;
+    right: 2%;
+    background-color: #1f8fff;
+    font-weight: 900;
+    font-family: 'Exo 2', sans-serif;
+}
+
+.check-edit-comment-false{
+    cursor: not-allowed;
+    pointer-events: none;
+    background-color: #3f98f1;
+}
+
+.edit-comment-form{
+    width: 100%;
+    padding-right: 55px;
+  
 }

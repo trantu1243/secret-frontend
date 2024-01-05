@@ -10,9 +10,16 @@ function HomeContent(props){
     const [checkLoad, setCheckLoad] = useState(true);
     // const [now, setNow] = useState(Date.now());
     
+    const handleScroll = useCallback(() => {
+        if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight) {
+            if(checkLoad) setSkip(preVal => (preVal + 5));
+            window.removeEventListener('scroll', handleScroll);
+        }
+    },[checkLoad]);
 
     const getPostData = useCallback(async ()=>{
         try{
+    
             if (checkLoad)
             {
                 console.log(skip);
@@ -29,10 +36,13 @@ function HomeContent(props){
 
                     if (response.data.posts.length === 0) {
                         setCheckLoad(false);
+                        
                     }else{
                         setPosts(preVal => Array.from(new Set([...preVal, ...response.data.posts])));
                         setCheckLoad(true);
+                        window.addEventListener("scroll", handleScroll);
                     }
+                    
                 }
             }
 
@@ -40,25 +50,20 @@ function HomeContent(props){
         catch (e){
             console.log(e);
         }
-    },[skip, checkLoad, props.token]);
+    },[skip, checkLoad, props.token, handleScroll]);
 
     useEffect(()=>{
         getPostData();
     },[getPostData]);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight) {
-                if(checkLoad) setSkip(preVal => (preVal + 5));
+    // useEffect(() => {
         
-            }
-        };
-        window.addEventListener("scroll", handleScroll);
+        
     
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [checkLoad, posts]);
+    //     return () => {
+            
+    //     };
+    // }, [checkLoad, posts]);
 
     return (
         <div className="content">

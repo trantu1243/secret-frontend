@@ -1,15 +1,51 @@
-import React, {useEffect, useRef, useContext, useState} from "react";
+import React, {useEffect, useRef, useContext, useState, useCallback} from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import { SERVER_URL } from "../constants";
+import axios from "axios";
 
-function PostInput(props){
+function EditPost(props){
     const navigate = useNavigate();
     const user = useContext(UserContext);
+
+    // get post
+    const [post, setPost] = useState({
+        _id:"",
+        userId: "",
+        name: "",
+        avatarUser: "",
+        content: "",
+        postDate: null,
+        interactDate: null,
+        image:"",
+        like:[],
+        comment:[],
+        repost:[],
+    });
+
+    const getPost = useCallback(async ()=>{
+        try{
+            const response = await axios.get(SERVER_URL + "/post/" + props.postId);
+            if (response.data){
+         
+                setPost(response.data);
+            }
+
+        }
+        catch (e){
+            console.log(e);
+        }
+    },[props.postId]);
+
+    useEffect(()=>{
+        getPost();
+    },[getPost]);
+
+    
+
     const [avatarImageUrl, setAvatarImageUrl] = useState("");
     useEffect(()=>{
-        if (user === null) navigate("/");
-        else{
+        if (user){
             setAvatarImageUrl(user.avatarImageUrl);
         }
     },[user, navigate]);
@@ -42,9 +78,14 @@ function PostInput(props){
     // Handle post input
     const [yourPost, setYourPost] = useState("");
     const [imageFile, setImageFile] = useState(null);
-    const [checkInput, setCheckInput] = useState(false);
-    const [checkImage, setCheckImage] = useState(false);
-    const [previewImage, setPreviewImage] = useState(null);
+    const [checkInput, setCheckInput] = useState(true);
+    const [checkImage, setCheckImage] = useState(true);
+    const [previewImage, setPreviewImage] = useState("");
+
+    useEffect(()=>{
+        setYourPost(post.content);
+        setPreviewImage(post.image);
+    }, [post]);
 
     function handlePostInput(e){
         const {value} = e.target;
@@ -75,23 +116,26 @@ function PostInput(props){
 
     async function handlePostSubmit(e){
         e.preventDefault();
+        console.log(yourPost);
         const formData = new FormData();
+        formData.append("postId", post._id);
         if (yourPost) formData.append("text", yourPost);
         if (imageFile) formData.append("image", imageFile);
 
         try{
-            const response = await fetch(SERVER_URL + "/upload/post",{
-                method: "POST",
+            const response = await fetch(SERVER_URL + "/edit/post",{
+                method: "PATCH",
                 body: formData,
                 headers:{
                     Authorization: `Bearer ${props.token}`,
                 },
                 
             });
-            console.log("Upload post sucessfully");
+            
             if (response.ok) {
-                const data = await response.json();
-                navigate("/post/" + data.postId);
+                console.log("Edit post sucessfully");
+              
+                navigate("/post/" + post._id);
             }
         }
         catch(e){
@@ -142,7 +186,7 @@ function PostInput(props){
                     </label>
                     <input type="file" id="inputPostImage" accept="image/*" onChange={handlePostImage} />
 
-                    <button type="submit" onClick={handlePostSubmit} disabled={!checkInput} className={"check-button " + (checkInput ? "check-button-true" : "check-button-false")} >Post</button>
+                    <button type="submit" onClick={handlePostSubmit} disabled={!checkInput} className={"check-button " + (checkInput ? "check-button-true" : "check-button-false")} >Edit</button>
                 </form>
             </div>
             
@@ -150,4 +194,4 @@ function PostInput(props){
     )
 }
 
-export default PostInput;
+export default EditPost;

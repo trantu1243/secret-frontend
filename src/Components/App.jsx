@@ -7,6 +7,7 @@ import Profile from "./Profile/Profile";
 import axios from "axios";
 import { SERVER_URL } from "./constants";
 import Post from "./Post/Post";
+import Edit from "./Post/Edit";
 
 const UserContext = createContext();
 
@@ -70,6 +71,10 @@ function App() {
         {
             path:"post/:postId",
             element: <Post token={token} setToken={setToken} />
+        },
+        {
+            path:"edit/:postId",
+            element: <Edit token={token} setToken={setToken} />
         },
     ]);
     

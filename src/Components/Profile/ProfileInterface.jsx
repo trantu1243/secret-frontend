@@ -122,9 +122,10 @@ function ProfileInterface(props){
                 );
                 if (response) {
                     console.log("Follow successfully");
-                    getUser();
+                    
                 }
                 setCheckFollow(true);
+                getUser();
             } else{
                 navigate("/");
             }
@@ -152,10 +153,10 @@ function ProfileInterface(props){
             );
             if (response) {
                 console.log("Follow successfully");
-                getUser();
+                
             }
             setCheckFollow(false);
-         
+            getUser();
             
         }
         catch(e){

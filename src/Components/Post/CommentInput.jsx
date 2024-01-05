@@ -54,7 +54,7 @@ function CommentInput(props){
 
     useEffect(()=>{
         props.forwardedRef.current.focus();
-    },[props.forwardedRef])
+    },[props.forwardedRef]);
 
     return(
         <div className="commentInput">
