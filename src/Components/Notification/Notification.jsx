@@ -1,13 +1,11 @@
 import React, {useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import TopNavbar from "../Navbar/TopNavbar";
-import LeftNavbar from "../Navbar/LeftNavbar";
 import RightNavbar from "../Navbar/RightNavbar";
-import ContentProfile from "./ContentProfile";
-import "../CSS/home.css"
+import LeftNavbar from "../Navbar/LeftNavbar";
+import NotificationContent from "./NotificationContent";
 
-
-function Profile(props){
+function Notification(props){
     const navigate = useNavigate();
    
 
@@ -16,15 +14,15 @@ function Profile(props){
             navigate("/");
         }
     }, [navigate, props.token]);
+    
     return (
         <div className="home">
             <LeftNavbar token={props.token} setToken={props.setToken} />
-            <TopNavbar />
+            <TopNavbar  />
             <RightNavbar token={props.token} setToken={props.setToken} />
-            <ContentProfile token={props.token} setToken={props.setToken}/>
-            
+            <NotificationContent />
         </div>
-     )
+    )
 }
 
-export default Profile;
+export default Notification;

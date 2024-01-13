@@ -1,24 +1,11 @@
-import React, {useEffect, useRef, useContext, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../App";
+
 import { SERVER_URL } from "../constants";
 
-function PostInput(props){
+function SecretInput(props){
     const navigate = useNavigate();
-    const user = useContext(UserContext);
-    const [avatarImageUrl, setAvatarImageUrl] = useState("");
-    useEffect(()=>{
-        if (user) {
-            setAvatarImageUrl(user.avatarImageUrl);
-        }
-    },[user]);
 
-    function navigateProfile(){
-     
-        if (user._id) {
-            navigate("/profile/" + user._id);
-        }
-    }
 
     // add effect for post input
     const textareaRef = useRef(null);
@@ -80,7 +67,7 @@ function PostInput(props){
         if (imageFile) formData.append("image", imageFile);
 
         try{
-            const response = await fetch(SERVER_URL + "/upload/post",{
+            const response = await fetch(SERVER_URL + "/upload/secret",{
                 method: "POST",
                 body: formData,
                 headers:{
@@ -105,9 +92,8 @@ function PostInput(props){
             <div className="inputPost ">
                 <img 
                     className="avatar" 
-                    src={avatarImageUrl || "https://trantu1243.blob.core.windows.net/loadimage-11ee-814b-45e4577e52de/60f1fe16956559.562b39813b082.jpg"} 
+                    src="https://trantu1243.blob.core.windows.net/loadimage-11ee-814b-45e4577e52de/Screenshot 2024-01-13 225329.png"
                     alt="" 
-                    onClick={navigateProfile}
                 />
                 <form className="inputPost-form">
                     <textarea 
@@ -150,4 +136,4 @@ function PostInput(props){
     )
 }
 
-export default PostInput;
+export default SecretInput;

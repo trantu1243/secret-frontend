@@ -17,13 +17,13 @@ function Home(props){
     }, [navigate, props.token]);
     
     return (
-      <div className="home">
-          <LeftNavbar />
-          <TopNavbar />
-          <RightNavbar token={props.token} setToken={props.setToken} />
-          <HomeContent token={props.token} setToken={props.setToken} />
-            
-      </div>
+        <div className="home">
+            <LeftNavbar token={props.token} setToken={props.setToken} />
+            <TopNavbar  />
+            <RightNavbar token={props.token} setToken={props.setToken} />
+            <HomeContent token={props.token} setToken={props.setToken} />
+                
+        </div>
     )
 }
 

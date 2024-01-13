@@ -23,6 +23,7 @@ function InsidePost(props){
         like:[],
         comment:[],
         repost:[],
+        secret:false,
     });
     const [like, setLike] = useState(false);
     const [repost, setRepost] = useState(false);
@@ -82,14 +83,15 @@ function InsidePost(props){
     // handle navigate
     function navigateProfileUser(e){
         e.stopPropagation();
-        navigate("/profile/" + post.userId);
+        if (!post.secret){
+            navigate("/profile/" + post.userId);
       
-        window.location.reload();
-        window.scrollTo({
-            top: 0,
-            behavior: "instant"
-          });
- 
+            window.location.reload();
+            window.scrollTo({
+                top: 0,
+                behavior: "instant"
+            });
+        }
     }
 
     const location = useLocation();
@@ -232,7 +234,7 @@ function InsidePost(props){
     useEffect(()=>{
         if (props.profileId && post.repost.includes(props.profileId)) {
             setCheckRepost(true);
-            if (user._id && user._id === props.profileId) {
+            if (user && user._id === props.profileId) {
                 setRepostName("You");
             }
             else setRepostName(props.profileName);

@@ -8,11 +8,13 @@ import axios from "axios";
 import { SERVER_URL } from "./constants";
 import Post from "./Post/Post";
 import Edit from "./Post/Edit";
+import Notification from "./Notification/Notification";
+import Secret from "./Secret/Secret";
+import UserSecret from "./Secret/UserSecret";
 
 const UserContext = createContext();
 
 function App() {
-
 
     const [token, setToken] = useState(localStorage.getItem("token") || "");
 
@@ -76,6 +78,18 @@ function App() {
             path:"edit/:postId",
             element: <Edit token={token} setToken={setToken} />
         },
+        {
+            path:"notification",
+            element: <Notification token={token} setToken={setToken} />
+        },
+        {
+            path:"secret",
+            element: <Secret token={token} setToken={setToken} />
+        },
+        {
+            path:"yoursecret",
+            element: <UserSecret token={token} setToken={setToken} />
+        }
     ]);
     
       

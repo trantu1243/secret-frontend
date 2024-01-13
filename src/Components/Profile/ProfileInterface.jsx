@@ -124,7 +124,7 @@ function ProfileInterface(props){
                     console.log("Follow successfully");
                     
                 }
-                setCheckFollow(true);
+                
                 getUser();
             } else{
                 navigate("/");
@@ -155,7 +155,7 @@ function ProfileInterface(props){
                 console.log("Follow successfully");
                 
             }
-            setCheckFollow(false);
+            
             getUser();
             
         }
@@ -210,10 +210,10 @@ function ProfileInterface(props){
                 </div>
                 
                 <div className="profilePost">
-                    <div>
+                    <div onClick={()=>{props.showPost();}}>
                         <p>Posts</p>
                     </div>
-                    <div>
+                    <div onClick={()=>{props.showLikedPost()}}>
                         <p>Likes</p>
                     </div>
                 </div>
