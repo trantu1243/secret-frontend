@@ -272,7 +272,7 @@ function Comment(props){
                 <div className="inputPost ">
                     <img 
                         className="avatar" 
-                        src={cmt.avatarImageUrl || "https://trantu1243.blob.core.windows.net/loadimage-11ee-814b-45e4577e52de/60f1fe16956559.562b39813b082.jpg"} 
+                        src={cmt.avatarImageUrl || "https://trantu-secret.s3.ap-southeast-2.amazonaws.com/60f1fe16956559.562b39813b082.jpg"} 
                         alt="" 
                         
                     />

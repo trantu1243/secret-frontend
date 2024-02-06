@@ -17,7 +17,7 @@ function Post(props){
     }, [navigate, props.token]);
     return (
         <div className="home">
-            <LeftNavbar />
+            <LeftNavbar token={props.token} setToken={props.setToken}/>
             <TopNavbar />
             <RightNavbar token={props.token} setToken={props.setToken}/>
             

@@ -92,7 +92,7 @@ function SecretInput(props){
             <div className="inputPost ">
                 <img 
                     className="avatar" 
-                    src="https://trantu1243.blob.core.windows.net/loadimage-11ee-814b-45e4577e52de/Screenshot 2024-01-13 225329.png"
+                    src="https://trantu-secret.s3.ap-southeast-2.amazonaws.com/4123763.png"
                     alt="" 
                 />
                 <form className="inputPost-form">

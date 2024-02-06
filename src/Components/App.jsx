@@ -11,6 +11,9 @@ import Edit from "./Post/Edit";
 import Notification from "./Notification/Notification";
 import Secret from "./Secret/Secret";
 import UserSecret from "./Secret/UserSecret";
+import SettingPage from "./Setting/Setting";
+import ChangePass from "./Setting/ChangePass";
+import EditProfile from "./Setting/EditProfile";
 
 const UserContext = createContext();
 
@@ -89,6 +92,18 @@ function App() {
         {
             path:"yoursecret",
             element: <UserSecret token={token} setToken={setToken} />
+        },
+        {
+            path:"setting",
+            element: <SettingPage token={token} setToken={setToken} />
+        },
+        {
+            path:"changepassword",
+            element: <ChangePass token={token} setToken={setToken} />
+        },
+        {
+            path:"editprofile",
+            element: <EditProfile token={token} setToken={setToken} />
         }
     ]);
     

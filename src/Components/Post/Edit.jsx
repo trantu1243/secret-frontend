@@ -18,7 +18,7 @@ function Edit(props){
     
     return (
       <div className="home">
-            <LeftNavbar />
+            <LeftNavbar token={props.token} setToken={props.setToken} />
             <TopNavbar />
             <RightNavbar token={props.token} setToken={props.setToken} />
             <div className="content">

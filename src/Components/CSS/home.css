@@ -953,3 +953,106 @@ p{
     color: gray;
     font-size: 15px;
 }
+
+.change-pass-form{
+    padding: 30px;
+}
+
+.change-pass-form > *{
+    display: block;
+}
+
+.change-pass-form > label{
+    color: rgb(188, 188, 188);
+}
+
+.change-pass-form > input{
+    background-color: rgb(62, 62, 62);
+    border: none;
+    padding: 10px;
+    color: rgb(211, 211, 211);
+    border-radius: 10px;
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+.change-pass-form > input:focus{
+    outline: none;
+}
+
+.change-pass-button{
+    margin-top: 20px;
+    color: whitesmoke;
+    padding: 10px 15px;
+    border: none;
+    font-size: 15px;
+    border-radius: 20px;
+    background-color: #1f8fff;
+    font-weight: bolder;
+    font-family: 'Exo 2', sans-serif;
+}
+
+.setting-item{
+    padding: 15px 20px;
+  
+    margin: 2px 2px;
+    border-radius: 4px;
+    font-family: 'Open Sans', sans-serif;
+    background-color:  rgb(22, 22, 22);
+}
+
+.setting-item:hover{
+    cursor: pointer;
+    background-color:  rgb(33, 33, 33);
+}
+
+.editpr-form{
+    padding: 20px;
+    width: 340px;
+    height: 500px;
+    
+}
+
+.editpr-form input{
+    padding: 10px;
+    background-color: rgb(32, 32, 32);
+    border: 0;
+    color: whitesmoke;
+    border-radius: 10px;
+}
+
+.editpr-form label{
+    margin-bottom: 5px;
+}
+
+.editpr-form input:focus{
+    outline: none;
+}
+
+.username-item > *{
+    width: 320px;
+    display: block;
+}
+
+.username-item input{
+    margin-bottom: 10px;
+}
+
+.name-item > *{
+    display: block;
+    width: 130px;
+}
+
+.firtname-item{
+    float: left;;
+}
+
+.lastname-item{
+    float: right;
+}
+
+.name-farth{
+    display: block;
+    width: 320px;
+    height: 60px;
+}

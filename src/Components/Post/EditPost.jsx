@@ -21,6 +21,7 @@ function EditPost(props){
         like:[],
         comment:[],
         repost:[],
+        secret:false,
     });
 
     const getPost = useCallback(async ()=>{
@@ -45,13 +46,14 @@ function EditPost(props){
 
     const [avatarImageUrl, setAvatarImageUrl] = useState("");
     useEffect(()=>{
-        if (user){
+        if (post.secret) setAvatarImageUrl("https://trantu-secret.s3.ap-southeast-2.amazonaws.com/4123763.png");
+        else if (user){
             setAvatarImageUrl(user.avatarImageUrl);
         }
-    },[user, navigate]);
+    },[user, navigate, post]);
 
     function navigateProfile(){
-        if (user._id) {
+        if (!post.secret && user._id) {
             navigate("/profile/" + user._id);
         }
     }
@@ -79,13 +81,18 @@ function EditPost(props){
     const [yourPost, setYourPost] = useState("");
     const [imageFile, setImageFile] = useState(null);
     const [checkInput, setCheckInput] = useState(true);
-    const [checkImage, setCheckImage] = useState(true);
+    const [checkImage, setCheckImage] = useState(false);
     const [previewImage, setPreviewImage] = useState("");
 
     useEffect(()=>{
         setYourPost(post.content);
         setPreviewImage(post.image);
     }, [post]);
+
+    useEffect(()=>{
+        if (previewImage) setCheckImage(true);
+        else setCheckImage(false);
+    }, [previewImage])
 
     function handlePostInput(e){
         const {value} = e.target;
@@ -99,11 +106,13 @@ function EditPost(props){
     },[imageFile, yourPost]);
 
     function handlePostImage(e){
-        setImageFile(e.target.files[0]);
-        setCheckImage(true);
+        if (e.target.files[0]){
+            setImageFile(e.target.files[0]);
 
-        const previewURL = URL.createObjectURL(e.target.files[0]);
-        setPreviewImage(previewURL);
+            const previewURL = URL.createObjectURL(e.target.files[0]);
+            setPreviewImage(previewURL);
+        }
+        
     }
 
     function handleImageCancel(){
@@ -111,7 +120,7 @@ function EditPost(props){
         setCheckImage(false);
 
         URL.revokeObjectURL(previewImage);
-        setPreviewImage(null);
+        setPreviewImage("");
     }
 
     async function handlePostSubmit(e){
@@ -149,7 +158,7 @@ function EditPost(props){
             <div className="inputPost ">
                 <img 
                     className="avatar" 
-                    src={avatarImageUrl || "https://trantu1243.blob.core.windows.net/loadimage-11ee-814b-45e4577e52de/60f1fe16956559.562b39813b082.jpg"} 
+                    src={avatarImageUrl || "https://trantu-secret.s3.ap-southeast-2.amazonaws.com/60f1fe16956559.562b39813b082.jpg"} 
                     alt="" 
                     onClick={navigateProfile}
                 />
